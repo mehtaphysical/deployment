@@ -7,6 +7,6 @@
 * add app to travis
 * cd with travis
   * encrypt heroku api key
-  * add deploy to .travis.yml
+  * add deploy to .travis.ym
 
 [travis setup](https://docs.travis-ci.com/user/deployment/heroku/)
