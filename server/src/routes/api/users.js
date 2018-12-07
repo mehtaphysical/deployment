@@ -2,6 +2,7 @@ import { Router } from 'express';
 import User from '../../models/User';
 import { HttpError } from '../../middleware/error';
 import requireAuth from '../../middleware/requireAuth';
+import { requireRole, requireNanny } from '../../middleware/requireRole';
 
 export default Router()
   .post('/signup', (req, res, next) => {

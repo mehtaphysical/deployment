@@ -11,6 +11,9 @@
     "start": "node lib/index.js",
     "start:watch": "nodemon src/index.js --exec babel-node"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

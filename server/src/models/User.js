@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema({
   },
   passwordHash: {
     type: String
+  },
+  roles: {
+    type: String,
+    enum: ['admin', 'nanny', 'parent'],
+    required: true
   }
 }, {
     toJSON: {

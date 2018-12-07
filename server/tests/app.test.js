@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
-import { connect } from '../utils/connect'
+import { connect } from '../src/utils/connect'
 import request from 'supertest';
-import app from './app';
-import { tokenize } from '../utils/auth';
+import app from '../src/routes/app';
+import { tokenize } from '../src/utils/auth';
+import { getToken } from './testHelper';
 
 connect('mongodb://172.17.0.2:27017/people_test');
 
@@ -40,7 +41,7 @@ describe('app routes', () => {
   });
 
   it('can verify a user', () => {
-    const token = tokenize({ _id: '1234', email: 'test@test.com' });
+    const token = getToken();
 
     return request(app)
       .get('/api/users/verify')
