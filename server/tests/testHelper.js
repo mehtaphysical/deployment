@@ -1,19 +1,17 @@
 import { config } from 'dotenv';
 config();
 
+import mongoose from 'mongoose';
 import { connect } from '../src/utils/connect';
 import request from 'supertest';
 import User from '../src/models/User';
 import Toy from '../src/models/Toy';
 import app from '../src/routes/app';
 
-connect('mongodb://localhost:27017/toys_test');
+connect('mongodb://172.17.0.2:27017/toys_test');
 
 beforeEach(() => {
-  return Promise.all([
-    User.collection.drop(),
-    Toy.collection.drop()
-  ]);
+  return mongoose.connection.dropDatabase()
 });
 
 beforeEach(() => {
@@ -29,7 +27,7 @@ beforeEach(() => {
 beforeEach(() => {
   return User.findOne()
     .then(user => {
-      return Toys.create(
+      return Toy.create(
         { name: 'red ball', user: user },
         { name: 'blue ball', user: user },
         { name: 'red truck', user: user },

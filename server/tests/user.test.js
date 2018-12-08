@@ -1,15 +1,11 @@
-import { getToys } from './testHelper';
-import User from '../src/models/User';
-import Toy from '../src/models/Toy';
-import { Types } from 'mongoose';
+import { getToy } from './testHelper';
 
-test('test', () => {
-  return getToys({ name: 'red truck' }).then(toys => {
-    expect(toys[0]).toEqual({
-      name: 'red truck',
-      _id: expect.any(String),
-      user: expect.any(String),
-      __v: 0
-    })
-  })
+test('test', async () => {
+  const toy = await getToy({ name: 'red truck' })
+  expect(toy).toEqual({
+    name: 'red truck',
+    _id: expect.any(String),
+    user: expect.any(String),
+    __v: 0
+  });
 })

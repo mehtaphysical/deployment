@@ -2,13 +2,15 @@ import { Router } from 'express';
 import User from '../../models/User';
 import { HttpError } from '../../middleware/error';
 import requireAuth from '../../middleware/requireAuth';
-import { requireRole, requireNanny } from '../../middleware/requireRole';
 
 export default Router()
   .post('/signup', (req, res, next) => {
     const { email, password } = req.body;
     User.create({ email, password })
-      .then(user => res.json(user))
+      .then(user => {
+        res.setHeader('X-AUTH-TOKEN', user.authToken());
+        res.json(user)
+      })
       .catch(next);
   })
 
@@ -16,7 +18,7 @@ export default Router()
     const { email, password } = req.body;
     User.findOne({ email })
       .then(user => {
-        if (!user.compare(password)) return next(new HttpError({ code: 401, message: 'Invalid email/password' }));
+        if (!user || !user.compare(password)) return next(new HttpError({ code: 401, message: 'Invalid email/password' }));
         const authToken = user.authToken();
         res.setHeader('X-AUTH-TOKEN', authToken);
         res.json(user);
